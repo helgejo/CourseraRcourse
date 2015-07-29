@@ -9,13 +9,13 @@ best <- function(state, outcome) {
     ## Check that state and outcome are valid
     if(!state %in% states){stop("invalid state")}
     if(!outcome %in% outcomes){stop("invalid outcome")}
-    print(state)
+    #print(state)
     
     col <- match(outcome, outcomes)
     col <- index[col]
     
     ## Return hospital name 2 with lowest 30-day death rate for outcome in the state
-    ##  The outcomes can be one of “heart attack” 11, “heart failure” 17, or “pneumonia” 23
+    ##  The outcomes can be one of ???heart attack??? 11, ???heart failure??? 17, or ???pneumonia??? 23
     state <- data[data$State==state,]
     row <- which.min(as.double(state[,col]))
     return <- state[row,"Hospital.Name"]
