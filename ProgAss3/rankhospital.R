@@ -16,13 +16,25 @@ rankhospital <- function(state, outcome, num = "best") {
     
     ## Check that num is not > numbers of hospital in that state. if it is the return NA.
     state <- data[data$State==state,]
-    checkNum <- length(unique(state[,"Hospital.Name"]))
-    print(checkNum)
-    if(num == "worst") {rank <- checkNum}
-    else if(num > checkNum) {stop("NA")}
-    else {rank <- num}
-    
+   
+    state.data <- state[,c(2,col)]
+    ## print(head(state.data))
     ## Return hospital name in that state with the given rank 30-day death rate
     ## Use order function and order first on rate then on name
     
+    #print(is.atomic(state.data[,2]))
+    
+   state.ordered <- state.data[order(as.numeric(state.data[,2]), state.data[,1],na.last = NA, decreasing = FALSE),]
+   
+   ##print(state.ordered)
+   
+   checkNum <- length(state.ordered[,2])
+   ##print(checkNum)
+   if(num == "worst") {rank <- checkNum}
+   else if(num == "best") {rank <- 1}
+   else if(num > checkNum) {return(NA)}
+   else {rank <- num}
+   ##print(rank)
+   
+   return(state.ordered[rank,1])
 }
